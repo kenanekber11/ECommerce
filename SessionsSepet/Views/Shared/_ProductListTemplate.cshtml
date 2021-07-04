@@ -1,0 +1,109 @@
+﻿@model List<Urun>
+
+@foreach (var item in Model)
+{
+    <div class="row-fluid">
+        <div class="span2">
+            @if (item.UrunImages.Count > 0)
+            {
+                var UrunImage = item.UrunImages.FirstOrDefault();
+                <img style="width:101px;" src="~/ProductImages/@UrunImage.Adi" alt="" />
+            }
+            else
+            {
+                <img style="width:101px;" src="~/ProductImages/notfoundImages.png" alt="" />
+            }
+        </div>
+        <div class="span6">
+            <h5>@item.Adi</h5>
+            <p>
+
+                @if (item.Aciklama != null)
+                {
+                    if (item.Aciklama.Length > 150)
+                    {
+                        @Html.Raw(item.Aciklama.Substring(0,150))
+                    }
+                }
+            </p>
+        </div>
+        <div class="span4 alignR">
+
+            @using (Ajax.BeginForm("SepeteEkle", "Home", null, new AjaxOptions { OnSuccess = "UpdateSepetHtml" }, new { @class = "form-horizontal qtyFrm" }))
+            {
+                <h3> @item.Fiyat ₺  </h3>
+                <div class="btn-group">
+
+                    <input type="hidden" value="@item.ID" name="UrunID" id="UrunID" />
+                    @if (item.Stok > 0)
+                    {
+                        <button style="margin-top: -9px;" type="submit" class="defaultBtn"><span class=" icon-shopping-cart"></span> Sepete At</button>
+                    }
+                    else
+                    {
+                        <input style="margin-top: -9px;" type="button" value="Sepette Yok" class="defaultBtn" />
+                    }
+
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })" class="shopBtn">Detay</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr class="soften">
+}
+
+
+@*<div class="row-fluid">
+    <div class="span2">
+        <img src="assets/img/d.jpg" alt="">
+    </div>
+    <div class="span6">
+        <h5>Product Name </h5>
+        <p>
+            Nowadays the lingerie industry is one of the most successful business spheres.
+            We always stay in touch with the latest fashion tendencies -
+            that is why our goods are so popular..
+        </p>
+    </div>
+    <div class="span4 alignR">
+        <form class="form-horizontal qtyFrm">
+            <h3> $140.00</h3>
+            <label class="checkbox">
+                <input type="checkbox">  Adds product to compair
+            </label><br>
+            <div class="btn-group">
+                <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+                <a href="product_details.html" class="shopBtn">VIEW</a>
+            </div>
+        </form>
+    </div>
+</div>
+<hr class="soft">*@
+
+
+<script>
+
+    // ajax responsu geldiğinde
+    function UpdateSepetHtml(response) {
+
+        var adet = 0;
+        var toplamFiyat = 0;
+        $.each(response, function (index, item) {
+
+            if (!item.Eklendimi) {
+                alert("Daha fazla eklenemez....");
+                return;
+            }
+
+            adet += item.Adet;
+            toplamFiyat += item.Fiyat * adet;
+        });
+
+        $("#SepetAdet").html(adet + " Item(s)");
+        $("#SepetPrice").html(toplamFiyat + " ₺");
+        $("#SepetMiniCount").html(adet);
+    }
+
+</script>

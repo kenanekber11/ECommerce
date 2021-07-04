@@ -1,0 +1,173 @@
+﻿@model SessionsSepet.Models.Urun
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li><a href="products.html">Items</a> <span class="divider">/</span></li>
+    <li class="active">Preview</li>
+</ul>
+<div class="well well-small">
+    <div class="row-fluid">
+        <div class="span5">
+            <div id="myCarousel" class="carousel slide cntr">
+
+                <div class="carousel-inner">
+
+                    @{ int i = 0;}
+                    @foreach (var item in Model.UrunImages)
+                    {
+                        string className = "";
+                        if (i == 0)
+                        {
+                            className = "active";
+                        }
+
+                        <div class="item @className">
+                            <a href="#"> <img src="~/ProductImages/@item.Adi" alt="" style="width:100%"></a>
+                        </div>
+
+                        i++;
+                    }
+
+                </div>
+
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+            </div>
+        </div>
+        <div class="span7">
+            <h3>@Model.Adi [@Model.Fiyat ₺]</h3>
+            <hr class="soft" />
+
+            @*<form class="form-horizontal qtyFrm">*@
+
+            @using (Ajax.BeginForm("SepeteEkle", "Home", null, new AjaxOptions { OnSuccess = "UpdateSepetHtml" }, new { @class = "form-horizontal qtyFrm" }))
+            {
+                <div class="control-group">
+                    <label class="control-label"><span>@Model.Fiyat ₺</span></label>
+                    <div class="controls">
+                        <input type="hidden" id="UrunID" name="UrunID" value="@Model.ID" />
+                        <input type="number" id="Adet" name="Adet" class="span6" placeholder="Qty.">
+                    </div>
+                </div>
+
+                <h4>  @Model.Stok items in stock </h4>
+
+                <p>
+                    @*Eğer içerik içerisnde html varsa içeriği html olarak gösterir*@
+
+                    @if (Model.Aciklama != null)
+                    {
+                        if (Model.Aciklama.Length > 50)
+                        {
+
+                            @Html.Raw(Model.Aciklama.Substring(0, 50).Insert(50, "...."))
+                            <a href="#dvAciklama">Devamı...</a>
+                        }
+                    }
+                </p>
+
+
+                <p>  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span>Sepete At</button> </p>
+
+            }
+
+            @*</form>*@
+        </div>
+    </div>
+    <hr class="softn clr" />
+    <ul id="productDetail" class="nav nav-tabs">
+        <li class="active"><a href="#home" data-toggle="tab">Product Details</a></li>
+        <li class=""><a href="#profile" data-toggle="tab">Benzer Ürünler</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content tabWrapper">
+        <div class="tab-pane fade active in" id="home">
+
+            @if (Model.UrunOzelliks.Count == 0)
+            {
+                <h4>Güncelleniyor...</h4>
+            }
+            else
+            {
+                var MasterOzellik = Model.UrunOzelliks.GroupBy(c => new
+                    {
+                        c.Ozellik.OzellikMaster.Adi,
+                        c.Ozellik.OzellikMaster.ID
+                    }).ToList();
+
+                foreach (var item in MasterOzellik)
+                {
+                    <h4>@item.Key.Adi</h4>
+
+                    <table class="table table-striped">
+                        <tbody>
+                            @foreach (var subitem in Model.UrunOzelliks.Where(c => c.Ozellik.OzellikMasterID == item.Key.ID))
+                            {
+                                <tr class="techSpecRow">
+                                    <td class="techSpecTD1" style="width:150px;"> @subitem.Ozellik.Adi </td>
+                                    <td class="techSpecTD1" style="width:5px;">:</td>
+                                    <td class="techSpecTD2">@subitem.Adi</td>
+                                </tr>
+                            }
+                            @*<tr class="techSpecRow"><td class="techSpecTD1">Style:</td><td class="techSpecTD2">Apparel,Sports</td></tr>
+                        <tr class="techSpecRow"><td class="techSpecTD1">Season:</td><td class="techSpecTD2">spring/summer</td></tr>
+                        <tr class="techSpecRow"><td class="techSpecTD1">Usage:</td><td class="techSpecTD2">fitness</td></tr>
+                        <tr class="techSpecRow"><td class="techSpecTD1">Sport:</td><td class="techSpecTD2">122855031</td></tr>
+                        <tr class="techSpecRow"><td class="techSpecTD1">Brand:</td><td class="techSpecTD2">Shock Absorber</td></tr>*@
+                        </tbody>
+                    </table>
+                }
+
+
+            }
+            @*Eğer içerik içerisnde html varsa içeriği html olarak gösterir*@
+
+            <div id="dvAciklama">
+                @Html.Raw(Model.Aciklama)
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="profile">
+
+            @{
+                var kategorisininUrunleri = Model.Kategori.Uruns.Where(c => c.ID != Model.ID).ToList();
+            }
+
+            @Html.Partial("_ProductListTemplate", kategorisininUrunleri)
+        </div>
+    </div>
+</div>
+
+
+@section pageScripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+<script>
+
+
+    function UpdateSepetHtml(response) {
+
+
+        var adet = 0;
+        var toplamFiyat = 0;
+        $.each(response, function (index, item) {
+
+            if (!item.Eklendimi) {
+                alert("Daha fazla eklenemez....");
+                return;
+            }
+
+            adet += item.Adet;
+            toplamFiyat += item.Fiyat * adet;
+        });
+
+        $("#SepetAdet").html(adet);
+        $("#SepetPrice").html(toplamFiyat + " ₺");
+        $("#SepetMiniCount").html(adet);
+
+    }
+</script>

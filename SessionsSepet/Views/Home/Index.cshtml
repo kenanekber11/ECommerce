@@ -1,0 +1,362 @@
+﻿@model SessionsSepet.Models.IndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="well well-small">
+    <hr class="soften" />
+    <div class="row-fluid">
+        <div id="newProductCar" class="carousel slide">
+            <div class="carousel-inner">
+                @{
+
+                    // toplam ürün sayısı
+                    int itemCount = Model.Yenilers.Count;
+
+                    // ürünler 4 adet item divleri içerisinde olacak. Bizim 4 adet ürün ekleyebilecek kadar item divine ihtiyacımız var...
+                    // item divivin içerisindeki ürün adetii..
+                    int GorselCount = 5;
+
+                    // toplam ürün satısını item sayısna bölyüoruz... burada küsüratlı değer çıkabilmesi iiçn dobule değişken kullanıdk. çünkü küsüratlı çıkanr değeri yukarı yuvarlamamız gerekiyor. Bunu math sınıfı ile yapıyoruz. math sınıfı metotları dobule döner...k
+                    double result = Convert.ToDouble(itemCount) / Convert.ToDouble(GorselCount);
+
+                    // küsüralı değeri yukarı yuvarladık...
+                    result = Math.Ceiling(result); //  çıkan küsüratlı değeri math sınıfının celing metodu ile yukarı yuvar...
+
+                    int imageIndex = 0;
+                }
+
+                @*// oluşturulacak item divi kadar dön....*@
+                @for (int i = 0; i < result; i++)
+                {
+                    string className = "";
+                    if (i == 0)
+                    {
+                        className = "active";
+                    }
+                    // take komutu sql dilindeki top komutunda eşittir...
+                    // select top 4 * from Products
+
+                    // Skip => satır atlamk için kullanılır
+
+
+                    int atlanancakSatir = i * 4;
+
+                    // i yi item ile çarpıp listeden satır alırken n satır atlayıp 4 tane kayır çekiyoruz..
+                    var prodcuts = Model.Yenilers.Skip(atlanancakSatir).Take(4).ToList();
+
+
+                    <div class="item @className">
+
+                        <ul class="thumbnails">
+                            @*bu kayıtları ekrana yazıyoeruz...*@
+                            @foreach (var item in prodcuts)
+                            {
+                                <li class="span3">
+                                    <div class="thumbnail">
+                                        <a class="zoomTool" href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+
+                                        @*bu gün eklenmişse*@
+                                        @if (item.EklenmeTarihi.Value.ToShortDateString() == DateTime.Now.ToShortDateString())
+                                        {
+                                            <a href="#" class="tag"></a>
+                                        }
+
+                                        <a href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })">
+                                            @{
+                                                if (item.UrunImages.Count > 0)
+                                                {
+                                                    var UrunImage = item.UrunImages.FirstOrDefault();
+                                                    <img style="height:117px;" src="~/ProductImages/@UrunImage.Adi" alt="" />
+                                                }
+                                                else
+                                                {
+                                                    <img style="height:117px;" src="~/ProductImages/notfoundImages.png" alt="" />
+                                                }
+                                            }
+
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+            <a class="left carousel-control" href="#newProductCar" data-slide="prev">&lsaquo;</a>
+            <a class="right carousel-control" href="#newProductCar" data-slide="next">&rsaquo;</a>
+        </div>
+    </div>
+
+
+    <!-- son eklenen 10 ürün new products-->
+
+    <div class="row-fluid">
+        <ul class="thumbnails">
+
+            @foreach (var item in Model.Vitrins)
+            {
+                <li class="span4">
+                    <div class="thumbnail">
+
+                        <a class="zoomTool" href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+                        <a href="@Url.Action("Detail","Products",new { ProductID = item.ID ,ProductName = item.Adi.Replace(" ","-")})">
+
+
+                            @{
+                                if (item.UrunImages.Count > 0)
+                                {
+                                    var UrunImage = @item.UrunImages.FirstOrDefault();
+                                    <img style="height:117px;" src="~/ProductImages/@UrunImage.Adi" alt="" />
+                                }
+                                else
+                                {
+                                    <img style="height:117px;" src="~/ProductImages/notfoundImages.png" alt="" />
+                                }
+                            }
+
+
+                        </a>
+
+                        <div class="caption cntr">
+                            <p>@item.Adi</p>
+                            <p><strong> @item.Fiyat ₺</strong></p>
+
+
+                            @using (Ajax.BeginForm("SepeteEkle", "Home", new AjaxOptions { OnSuccess = "UpdateSepetHtml" }))
+                            {
+                                <h4>
+
+                                    @*<a class="shopBtn" href="#" title="add to cart"> Sepete Ekle </a>*@
+                                    <input type="hidden" value="@item.ID" name="UrunID" id="UrunID" />
+                                    @if (item.Stok > 0)
+                                    {
+                                        <input type="submit" value="Sepete Ekle" class="shopBtn" />
+                                    }
+                                    else
+                                    {
+                                        <input type="button" value="Sepette Yok" class="shopBtn" />
+                                    }
+
+
+                                </h4>
+                            }
+
+                            <div class="actionList">
+                                <a class="pull-left" href="#">İstek Listesine Ekle </a>
+                                <a class="pull-left" href="#">Karşılaştırma Listesine Ekle </a>
+                            </div>
+                            <br class="clr">
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <!--- vitrin ilanları... -->
+</div>
+<!--
+Featured Products
+-->
+<div class="well well-small">
+    <h3><a class="btn btn-mini pull-right" href="products.html" title="View more">VIew More<span class="icon-plus"></span></a> Featured Products  </h3>
+    <hr class="soften" />
+    <div class="row-fluid">
+        <ul class="thumbnails">
+
+            @foreach (var item in Model.OneCikanlars)
+            {
+                <li class="span4">
+                    <div class="thumbnail">
+                        <a class="zoomTool" href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+
+                        <a href="@Url.Action("Detail","Products",new { ProductID = item.ID, ProductName = item.Adi.Replace(" ","-") })">
+
+                            @{
+                                var kat = item.Kategori;
+                                if (item.UrunImages.Count > 0)
+                                {
+                                    var UrunImage = @item.UrunImages.FirstOrDefault();
+                                    <img style="height:117px;" src="~/ProductImages/@UrunImage.Adi" alt="" />
+                                }
+                                else
+                                {
+                                    <img style="height:117px;" src="~/ProductImages/notfoundImages.png" alt="" />
+                                }
+                            }
+                        </a>
+
+                        <div class="caption">
+                            <h5>@item.Adi</h5>
+                            <h4>
+                                <a class="defaultBtn" href="@Url.Action("Detail","Products",new { ProductID = item.ID ,ProductName = item.Adi.Replace(" ","-")})" title="Click to view"><span class="icon-zoom-in"></span></a>
+
+                                @*son parametre html attribute tanımlamak için kullanılır...
+                                    formun parametre değrleri;
+
+                                    SepeteEkle => action adı
+                                    Home => Controller Adı
+                                    null => action parameter  (html attribute kullnabilmek için bu parametre null verdik.)
+                                    AjaxOptions => ajax configuration
+                                    new => html attributes
+
+                                *@
+
+                                @using (Ajax.BeginForm("SepeteEkle", "Home", null, new AjaxOptions { OnSuccess = "UpdateSepetHtml" }, new { style = "display:inline" }))
+                                {
+
+                                    @*<a class="shopBtn" href="#" title="add to cart"> Sepete Ekle </a>*@
+                                    <input type="hidden" value="@item.ID" name="UrunID" id="UrunID" />
+
+                                    if (item.Stok > 0)
+                                    {
+                                        <button class="shopBtn" title="Sepete Ekle" type="submit">
+                                            <span class="icon-plus"></span>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button style="background-color:#e6e6e6;" class="shopBtn" title="Sepete Ekle" type="submit" disabled="disabled">
+                                            <span class="icon-plus"></span>
+                                        </button>
+                                    }
+
+
+                                }
+
+
+
+
+
+                                <span class="pull-right">@item.Fiyat ₺</span>
+                            </h4>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <!--- Öne çıkan Ürünler...-->
+</div>
+
+<div class="well well-small">
+    <h3><a class="btn btn-mini pull-right" href="#" title="View more">VIew More<span class="icon-plus"></span></a> Son Gezdikleriniz</h3>
+    <hr class="soften" />
+    <div class="row-fluid">
+        <ul class="thumbnails">
+
+            @foreach (var item in Model.SonGezilenler)
+            {
+                <li class="span4">
+                    <div class="thumbnail">
+
+                        <a class="zoomTool" href="@Url.Action("Detail","Products",new { ProductID = item.ID, ProductName = item.Adi.Replace(" ","-") })" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+                        <a href="@Url.Action("Detail","Products",new { ProductID = item.ID ,ProductName = item.Adi.Replace(" ","-")})">
+
+                            @{
+                                if (item.UrunImages.Count > 0)
+                                {
+                                    var UrunImage = @item.UrunImages.FirstOrDefault();
+                                    <img style="height:117px;" src="~/ProductImages/@UrunImage.Adi" alt="" />
+                                }
+                                else
+                                {
+                                    <img style="height:117px;" src="~/ProductImages/notfoundImages.png" alt="" />
+                                }
+                            }
+
+
+                        </a>
+
+                        <div class="caption">
+                            <h5>@item.Adi</h5>
+                            <h4>
+                                <a class="defaultBtn" href="@Url.Action("Detail","Products",new { ProductID = item.ID,ProductName = item.Adi.Replace(" ","-") })" title="Click to view"><span class="icon-zoom-in"></span></a>
+
+                                @*son parametre html attribute tanımlamak için kullanılır...
+                                    formun parametre değrleri;
+
+                                    SepeteEkle => action adı
+                                    Home => Controller Adı
+                                    null => action parameter  (html attribute kullnabilmek için bu parametre null verdik.)
+                                    AjaxOptions => ajax configuration
+                                    new => html attributes
+
+                                *@
+
+                                @using (Ajax.BeginForm("SepeteEkle", "Home", null, new AjaxOptions { OnSuccess = "UpdateSepetHtml" }, new { style = "display:inline" }))
+                                {
+
+                                    @*<a class="shopBtn" href="#" title="add to cart"> Sepete Ekle </a>*@
+                                    <input type="hidden" value="@item.ID" name="UrunID" id="UrunID" />
+
+                                    if (item.Stok > 0)
+                                    {
+                                        <button class="shopBtn" title="Sepete Ekle" type="submit">
+                                            <span class="icon-plus"></span>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button style="background-color:#e6e6e6;" class="shopBtn" title="Sepete Ekle" type="submit" disabled="disabled">
+                                            <span class="icon-plus"></span>
+                                        </button>
+                                    }
+                                }
+                                <span class="pull-right">@item.Fiyat ₺</span>
+                            </h4>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <!--- Son Gezilenler...-->
+</div>
+
+<hr>
+<div class="well well-small"></div>
+
+
+<!---sectionlar layout pagede render edilir.. Layotu pagede render etmek için kullanılır...-->
+@section pageScripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+<script>
+
+    // ajax responsu geldiğinde
+    function UpdateSepetHtml(response) {
+
+        // içeriği güncelle...
+        console.log(response);
+
+        //for (var i = 0; i < response; i++) {
+
+        //}
+
+        //$.each =>foreach gibi çalışır. ilk paramtresi içerisinde dönülecek dizidir.. response bizim serverdan gönderdiğimiz json dizidir.  function burada responun her bir objesi için çalışır... index ve item parametreleri ile okunan itema erişmenizi sağlar..
+
+        var adet = 0;
+        var toplamFiyat = 0;
+        $.each(response, function (index, item) {
+
+
+
+            if (!item.Eklendimi) {
+                alert("Daha fazla eklenemez....");
+                return;
+            }
+
+            adet += item.Adet;
+            toplamFiyat += item.Fiyat * adet;
+        });
+
+
+
+        $("#SepetAdet").html(adet);
+        $("#SepetPrice").html(toplamFiyat + " ₺");
+        $("#SepetMiniCount").html(adet);
+    }
+
+</script>

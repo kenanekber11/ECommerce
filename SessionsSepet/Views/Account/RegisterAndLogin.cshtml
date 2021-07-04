@@ -1,0 +1,178 @@
+﻿@model RegisterViewModel
+
+
+@{
+    ViewBag.Title = "Kayıt Ol...";
+
+
+    string RetUrl = ViewBag.ReturnUrl;
+
+}
+
+
+<style>
+    .text-danger {
+        color: red;
+    }
+</style>
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li class="active">Registration</li>
+</ul>
+<h3> Registration</h3>
+<hr class="soft" />
+
+<div class="row">
+    <div class="span4">
+        <div class="well">
+            @using (Ajax.BeginForm("RegisterAndLogin", new AjaxOptions { OnSuccess = "OnSuccessRegister" }))
+            {
+                <input type="hidden" name="ReturnUrl" value="@RetUrl" />
+                <h3>CREATE YOUR ACCOUNT</h3>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputFname">Adınız <sup>*</sup></label>
+                    <div class="controls">
+
+                        @Html.TextBoxFor(c => c.Ad)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.Ad, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputFname">SoyAdınız <sup>*</sup></label>
+                    <div class="controls">
+
+                        @Html.TextBoxFor(c => c.SoyAd)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.SoyAd, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputFname">Kullanıcı Adı <sup>*</sup></label>
+                    <div class="controls">
+
+                        @Html.TextBoxFor(c => c.KullaniciAdi)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.KullaniciAdi, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+                    <div class="controls">
+
+                        @Html.TextBoxFor(c => c.Email)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.Email, "", new { @class = "text-danger" })
+
+
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Password <sup>*</sup></label>
+                    <div class="controls">
+                        @Html.PasswordFor(c => c.Sifre)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.Sifre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Password <sup>*</sup></label>
+                    <div class="controls">
+                        @Html.PasswordFor(c => c.SifreTekrar)
+                        <br />
+                        @Html.ValidationMessageFor(c => c.SifreTekrar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input id="btnSave" type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+                    </div>
+                </div>
+
+                <div id="alert" class="alert">
+
+                </div>
+            }
+        </div>
+    </div>
+    <div class="span1"></div>
+    <div class="span4">
+
+        <div class="well">
+            <h5>ALREADY REGISTERED ?</h5>
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                <input type="hidden" name="ReturnUrl" value="@RetUrl" />
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">UserName</label>
+                    <div class="controls">
+                        <input class="span3" type="text" placeholder="Kullanıcı Adı" name="userName">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                        <input type="password" class="span3" placeholder="Password" name="password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="defaultBtn">Giriş Yap</button> <a href="#">Forget password?</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+
+    </div>
+
+</div>
+@section pageScripts{
+
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function OnSuccessRegister(response) {
+
+            // console.log(response);
+
+            if (response == true) {
+
+                $("#btnSave").attr("disabled", true);
+                $("input[type='text']").val("");
+                $("input[type='password']").val("");
+
+                //
+                $("#alert").addClass("alert-info");
+                $("#alert").html("İşlem Başaralı, ana sayfaya yönelendiriliyorsunuz");
+
+
+                setTimeout(function () {
+                    location.href = "@Url.Action("Index","Home")";
+                }, 3000);
+
+            }
+            else {
+                $("#alert").addClass("alert-danger");
+                $("#alert").html("İşlem Başarısız. Lütfen bilgilerinizi kontrol ediniz");
+            }
+        }
+    </script>
+
+}

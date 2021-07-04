@@ -1,0 +1,147 @@
+﻿@model List<Adres>
+
+@{
+    ViewBag.Title = "Adres Bilgileri";
+}
+
+<div class="well well-small">
+
+    @using (Html.BeginForm("CreateOrder", "Shop", FormMethod.Get))
+    {
+
+        <h2>Adres Seçiniz</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="4"> <a href="@Url.Action("AddAddress","Account")">Yeni Adres Ekle</a> </th>
+                </tr>
+                <tr>
+                    <th>Teslimat <br />Adresi</th>
+                    <th>Fatura <br />Adresi</th>
+                    <th>Başlık</th>
+                    <th>İl</th>
+                    <th>İlçe</th>
+                    <th>Açık Adres</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="radio" name="teslimatAdres" value="@item.ID" /></td>
+                        <td><input type="radio" name="faturaAdres" value="@item.ID" /></td>
+                        <td>@item.Baslik</td>
+                        <td>@item.Il.Adi</td>
+                        <td>@item.Ilce.Adi</td>
+                        <td>@item.AcikAdress</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <div class="control-group">
+            <h2>Kargo Seçiniz</h2>
+            <div class="controls">
+
+                <select class="span6" id="cargo" name="cargo">
+                    <option value="">Seçiniz</option>
+
+                    @{
+                        List<Kargo> kargos = (List<Kargo>)ViewBag.Kargos;
+                    }
+
+                    @foreach (var item in kargos)
+                    {
+                        <option value="@item.ID">@item.Adi</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="shopBtn btn-large pull-right">AlışVerişi Tamamla <span class="icon-arrow-right"></span></button>
+
+    }
+
+    <div class="clearfix"></div>
+</div>
+@*<div class="well">
+        <form class="form-horizontal">
+            <h3>Your Personal Details</h3>
+            <div class="control-group">
+                <label class="control-label">Title <sup>*</sup></label>
+                <div class="controls">
+                    <select class="span1" name="days">
+                        <option value="">-</option>
+                        <option value="1">Mr.</option>
+                        <option value="2">Mrs</option>
+                        <option value="3">Miss</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputFname">First name <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="inputFname" placeholder="First Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputLname">Last name <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="inputLname" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" placeholder="Email">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Password <sup>*</sup></label>
+                <div class="controls">
+                    <input type="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Date of Birth <sup>*</sup></label>
+                <div class="controls">
+                    <select class="span1" name="days">
+                        <option value="">-</option>
+                        <option value="1">1&nbsp;&nbsp;</option>
+                        <option value="2">2&nbsp;&nbsp;</option>
+                        <option value="3">3&nbsp;&nbsp;</option>
+                        <option value="4">4&nbsp;&nbsp;</option>
+                        <option value="5">5&nbsp;&nbsp;</option>
+                        <option value="6">6&nbsp;&nbsp;</option>
+                        <option value="7">7&nbsp;&nbsp;</option>
+                    </select>
+                    <select class="span1" name="days">
+                        <option value="">-</option>
+                        <option value="1">1&nbsp;&nbsp;</option>
+                        <option value="2">2&nbsp;&nbsp;</option>
+                        <option value="3">3&nbsp;&nbsp;</option>
+                        <option value="4">4&nbsp;&nbsp;</option>
+                        <option value="5">5&nbsp;&nbsp;</option>
+                        <option value="6">6&nbsp;&nbsp;</option>
+                        <option value="7">7&nbsp;&nbsp;</option>
+                    </select>
+                    <select class="span1" name="days">
+                        <option value="">-</option>
+                        <option value="1">1&nbsp;&nbsp;</option>
+                        <option value="2">2&nbsp;&nbsp;</option>
+                        <option value="3">3&nbsp;&nbsp;</option>
+                        <option value="4">4&nbsp;&nbsp;</option>
+                        <option value="5">5&nbsp;&nbsp;</option>
+                        <option value="6">6&nbsp;&nbsp;</option>
+                        <option value="7">7&nbsp;&nbsp;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+                </div>
+            </div>
+        </form>
+    </div>*@

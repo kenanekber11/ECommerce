@@ -1,0 +1,85 @@
+﻿@model List<SessionsSepet.Models.SepetSepetYumurta>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Ürün</th>
+            <th>Açıklama</th>
+            <th>	Ref. </th>
+            <th>Avail.</th>
+            <th>Unit price</th>
+            <th>Qty </th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+
+                    @{
+                        if (item.Item.UrunImages.Count > 0)
+                        {
+                            var UrunImage = @item.Item.UrunImages.FirstOrDefault();
+                            <img width="100" src="~/ProductImages/@UrunImage.Adi" alt="" />
+                        }
+                        else
+                        {
+                            <img width="100" src="~/ProductImages/notfoundImages.png" alt="" />
+                        }
+                    }
+                </td>
+                <td>@item.Item.Adi <br>Stok : @item.Item.Stok<br>Kategori : @item.Item.Kategori.Adi </td>
+                <td> - </td>
+                <td><span class="shopBtn"><span class="icon-ok"></span></span> </td>
+                <td>
+                    @item.Item.Fiyat ₺
+                </td>
+                <td>
+                    @using (Ajax.BeginForm("SepetOperation", null, new AjaxOptions { OnSuccess = "SepetResult" }, new { style = "margin:0px;" }))
+                    {
+                        <input onkeyup="SepetSubmitV2(this)" class="span1" style="max-width:34px" placeholder="1" name="adet" size="16" type="text" value="@item.Adet">
+                        <input type="hidden" name="Stok" value="@item.Item.Stok" />
+                        <input type="hidden" name="operation" value="" />
+                        <input type="hidden" name="ProductID" value="@item.Item.ID" />
+
+                        <div class="input-append">
+                            <button onclick="SepetSubmit(this)" name="eksi" class="btn btn-mini" type="button">-</button>
+                            <button onclick="SepetSubmit(this)" name="arti" class="btn btn-mini" type="button"> + </button>
+                            <button onclick="SepetSubmit(this)" name="sil" class="btn btn-mini btn-danger" type="button">
+                                <span class="icon-remove"></span>
+                            </button>
+
+                        </div>
+                    }
+                </td>
+                <td>
+                    @{
+                        decimal toplamFiyat = item.Adet * item.Item.Fiyat;
+                    }
+                    @toplamFiyat ₺
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="6" class="alignR">Toplam Ürün:	</td>
+            <td>
+
+                @Model.Sum(c => c.Adet)
+
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" class="alignR">Toplam Fiyat:	</td>
+            <td>
+                @Model.Sum(c => c.Adet * c.Item.Fiyat)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<input type="hidden" id="hdnTotalCount" value="@Model.Sum(c=> c.Adet)" />
+<input type="hidden" id="hdnTotalPrice" value="@Model.Sum(c => c.Adet * c.Item.Fiyat)" />

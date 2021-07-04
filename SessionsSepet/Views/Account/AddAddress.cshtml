@@ -1,0 +1,125 @@
+﻿@model SessionsSepet.Models.Adres
+
+@{
+    ViewBag.Title = "Adres Ekle";
+}
+
+<div class="well">
+
+    <div>
+        @Html.ActionLink("Geri Dön", "Shop")
+    </div>
+
+   
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Adres</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="control-group">
+                @Html.LabelFor(model => model.Baslik, htmlAttributes: new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(model => model.Baslik, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.AcikAdress, htmlAttributes: new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.AcikAdress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AcikAdress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.IlID, htmlAttributes: new { @class = "control-label" })
+                <div class="controls">
+
+                    @Html.DropDownListFor(model => model.IlID, (SelectList)ViewBag.Cities, "Seçiniz", new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.IlID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.IlceID, htmlAttributes: new { @class = "control-label" })
+
+
+                <div class="controls">
+
+                    @*@Html.DropDownListFor(model => model.IlceID, (SelectList)new List<Ilce>(),"Seçiniz", new { htmlAttributes = new { @class = "form-control" } })*@
+                    <select id="IlceID" name="IlceID" class="form-control input-validation-error" data-val="true" data-val-required="İlce Seçiniz">
+                    </select>
+
+                    @Html.ValidationMessageFor(model => model.IlceID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <div class="col-md-offset-2 controls">
+                    <input type="submit" value="Ekle" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+</div>
+
+
+@section pageScripts{
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <script>
+
+
+        $("#IlID").change(function () {
+
+            var val = $(this).val();
+            if (val == "") {
+                return;
+            }
+
+            $("#IlceID").html("");
+
+            $.ajax({
+                url:"@Url.Action("GetDistricts","Account")",
+                type: "Get",
+                data: { CityID: val },
+                dataType: "json",
+                success: function (response) {
+
+
+                    var html = "<option value=''>Seçiniz</option>";
+                    $("#IlceID").append(html);
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        var ilce = response[i];
+
+                        html = "<option value='" + ilce.ID + "'>" + ilce.Adi + "</option>";
+                        $("#IlceID").append(html);
+
+                    }
+
+                }
+            });
+
+        });
+
+    </script>
+
+}

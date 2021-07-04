@@ -1,0 +1,92 @@
+﻿@model RegisterViewModel
+
+
+@{
+    ViewBag.Title = "Kayıt Ol...";
+}
+
+
+<style>
+    .text-danger{
+        color:red;
+
+    }
+</style>
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li class="active">Registration</li>
+</ul>
+<h3> Registration</h3>
+<hr class="soft" />
+<div class="well">
+
+
+
+    @using (Ajax.BeginForm("Register", new AjaxOptions { OnSuccess = "OnSuccessRegister" }))
+    {
+        <h3>Your Personal Details</h3>
+
+        <div class="control-group">
+            <label class="control-label" for="inputFname">Kullanıcı Adı <sup>*</sup></label>
+            <div class="controls">
+
+                @Html.TextBoxFor(c => c.KullaniciAdi)
+                @Html.ValidationMessageFor(c => c.KullaniciAdi,"",new { @class="text-danger" })
+
+            </div>  
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Email <sup>*</sup></label>
+            <div class="controls">
+
+                @Html.TextBoxFor(c => c.Email)
+                @Html.ValidationMessageFor(c => c.Email,"",new { @class="text-danger" })
+
+
+                
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Password <sup>*</sup></label>
+            <div class="controls">
+                @Html.PasswordFor(c => c.Sifre)
+                @Html.ValidationMessageFor(c => c.Sifre,"",new { @class="text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Password <sup>*</sup></label>
+            <div class="controls">
+                @Html.PasswordFor(c => c.SifreTekrar)
+                @Html.ValidationMessageFor(c => c.SifreTekrar,"",new { @class="text-danger" })
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@section pageScripts{
+
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function OnSuccessRegister(response) {
+
+           // console.log(response);
+
+
+        }
+    </script>
+
+}

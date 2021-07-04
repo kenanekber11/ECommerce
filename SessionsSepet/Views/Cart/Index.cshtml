@@ -1,0 +1,203 @@
+﻿@*model tanımlıyoruz *@
+
+@model List<SessionsSepet.Models.SepetSepetYumurta>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li class="active">Check Out</li>
+</ul>
+<div class="well well-small">
+    <h1>Sepetim <small class="pull-right"> <b id="cartItemCount"> @Model.Sum(c => c.Adet) </b> Items are in the cart </small></h1>
+    <hr class="soften" />
+
+    <div id="dvResult">
+
+        @Html.Partial("_SepetList", Model)
+
+    </div>
+    <br />
+
+
+    @*<table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>
+                    <form class="form-inline">
+                        <label style="min-width:159px"> VOUCHERS Code: </label>
+                        <input type="text" class="input-medium" placeholder="CODE">
+                        <button type="submit" class="shopBtn"> ADD</button>
+                    </form>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>*@
+    @*<table class="table table-bordered">
+        <tbody>
+            <tr><td>ESTIMATE YOUR SHIPPING & TAXES</td></tr>
+            <tr>
+                <td>
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="span2 control-label" for="inputEmail">Country</label>
+                            <div class="controls">
+                                <input type="text" placeholder="Country">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="span2 control-label" for="inputPassword">Post Code/ Zipcode</label>
+                            <div class="controls">
+                                <input type="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="shopBtn">Click to check the price</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>*@
+   
+    <a href="@Url.Action("Index","Home")" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Continue Shopping </a>
+    <a href="@Url.Action("Index","Shop")" class="shopBtn btn-large pull-right">Next <span class="icon-arrow-right"></span></a>
+
+</div>
+
+<style>
+    .RedBorder {
+        border: 1px solid red !important;
+    }
+</style>
+@section pageScripts{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+
+
+        //$("#btnAzalt").click(function () {
+
+        //    var val = $("#adet").val();
+        //    val--;
+        //    if (val < 1) {
+        //        val = 1;
+        //        $("#adet").addClass("RedBorder");
+
+        //    }
+        //    $("#adet").val(val);
+
+        //    setTimeout(function () {
+        //        $("#adet").removeClass("RedBorder");
+        //    }, 1000);
+
+        //    $("#operation").val("adetGuncelle");
+
+        //});
+
+        //$("#btnArttir").click(function () {
+
+        //    $("#adet").removeClass("RedBorder");
+
+        //    var val = $("#adet").val();
+        //    val++;
+        //    $("#adet").val(val);
+
+        //    $("#operation").val("adetGuncelle");
+        //});
+
+        //$("#btnSil").click(function () {
+
+        //    $("#operation").val("sil");
+
+        //});
+
+
+        function SepetSubmit(sender) {
+
+            var name = $(sender).attr("name");
+
+            // olayı tetikleyen inputun parentı olan formu yakaladık...
+            var form = $(sender).closest("form");
+
+
+            var operationName = name == "eksi" || name == "arti" ? "adetGuncelle" : "sil";
+            var val = $(form).find("[name='adet']").val();
+
+            if (name == "eksi") {
+                val--;
+                if (val < 1) {
+                    val = 1;
+                    $(form).find("[name='adet']").addClass("RedBorder");
+                }
+            }
+            else if (name == "arti") {
+                val++;
+
+                var stok = $(form).find("[name='Stok']").val();
+                if (val > stok) {
+                    val = stok;
+                    $(form).find("[name='adet']").addClass("RedBorder");
+                }
+            }
+            $(form).find("[name='adet']").val(val);
+
+            setTimeout(function () {
+                $(form).find("[name='adet']").removeClass("RedBorder");
+            }, 1000);
+
+
+            // formun içerisindeki hiddının valuesına operationname set ettikk...
+            $(form).find("[name='operation']").val(operationName);
+
+
+            $(form).submit(); // formu submit et....
+
+        }
+
+        function SepetSubmitV2(sender) {
+
+            var form = $(sender).closest("form");
+            $(form).find("[name='operation']").val("adetGuncelle");
+
+            debugger;
+
+            var val = $(sender).val();
+            var stok = $(form).find("[name='Stok']").val();
+
+            if (val > stok) {
+                val = stok;
+                $(form).find("[name='adet']").addClass("RedBorder");
+            }
+            
+
+            $(sender).val(val);
+            $(form).find("[name='adet']").val(val);
+          
+             
+            setTimeout(function () {
+                 $(form).submit(); // formu submit et....
+            }, 1);
+
+        }
+
+        function SepetResult(response) {
+
+            $("#dvResult").html(response);
+
+            $("#cartItemCount").html($("#hdnTotalCount").val())
+            $("#SepetAdet").html($("#hdnTotalCount").val());
+            $("#SepetPrice").html($("#hdnTotalPrice").val());
+
+            // javascript ile sayfayı refresh yapma..
+            //window.location.reload();
+        }
+    </script>
+
+}

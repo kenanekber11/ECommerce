@@ -1,0 +1,15 @@
+﻿@model List<Urun>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="well well-small">
+    @Html.Partial("_ProductListTemplate", Model)
+</div>
+
+
+
+@section pageScripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}

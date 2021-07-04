@@ -1,0 +1,16 @@
+﻿@model List<SessionsSepet.Models.SepetSepetYumurta>
+
+@{
+    int Adet=0;
+    decimal Fiyat = 0;
+}
+
+@foreach (var item in Model)
+{
+    Adet += item.Adet;
+    Fiyat += item.Item.Fiyat * item.Adet;
+}
+
+<a href="@Url.Action("Index","Cart")"><span class="icon-shopping-cart"></span> <b id="SepetAdet"> @Adet</b> Item(s) - <span class="badge badge-warning"> <b id="SepetPrice">@Fiyat ₺</b></span></a>
+
+

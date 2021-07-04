@@ -1,0 +1,29 @@
+﻿@model SessionsSepet.Models.Kategori
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>KategoriGetir</title>
+</head>
+<body>
+    <div>
+
+        @* Kategorinin Adı *@
+        @Model.Adi
+
+        @* modelin ürünleri varsa countu yaz.... *@
+        @if (Model.Uruns != null)
+        {
+            <b> @Model.Uruns.Count </b>
+        }
+
+
+    </div>
+</body>
+</html>

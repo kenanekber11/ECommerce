@@ -1,0 +1,524 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4E579535-92F8-43FE-B60C-CFF486CA3A41}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SessionsSepet</RootNamespace>
+    <AssemblyName>SessionsSepet</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Yonetim\dist\css\adminlte.css" />
+    <Content Include="Areas\Yonetim\dist\css\adminlte.min.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.components.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.components.min.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.core.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.core.min.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.extra-components.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.extra-components.min.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.pages.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.pages.min.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.plugins.css" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.plugins.min.css" />
+    <Content Include="Areas\Yonetim\dist\img\AdminLTELogo.png" />
+    <Content Include="Areas\Yonetim\dist\img\avatar.png" />
+    <Content Include="Areas\Yonetim\dist\img\avatar2.png" />
+    <Content Include="Areas\Yonetim\dist\img\avatar3.png" />
+    <Content Include="Areas\Yonetim\dist\img\avatar4.png" />
+    <Content Include="Areas\Yonetim\dist\img\avatar5.png" />
+    <Content Include="Areas\Yonetim\dist\img\boxed-bg.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\boxed-bg.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\american-express.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\cirrus.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\mastercard.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\paypal.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\paypal2.png" />
+    <Content Include="Areas\Yonetim\dist\img\credit\visa.png" />
+    <Content Include="Areas\Yonetim\dist\img\default-150x150.png" />
+    <Content Include="Areas\Yonetim\dist\img\icons.png" />
+    <Content Include="Areas\Yonetim\dist\img\photo1.png" />
+    <Content Include="Areas\Yonetim\dist\img\photo2.png" />
+    <Content Include="Areas\Yonetim\dist\img\photo3.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\photo4.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\prod-1.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\prod-2.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\prod-3.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\prod-4.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\prod-5.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user1-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user2-160x160.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user3-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user4-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user5-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user6-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user7-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\img\user8-128x128.jpg" />
+    <Content Include="Areas\Yonetim\dist\js\adminlte.js" />
+    <Content Include="Areas\Yonetim\dist\js\adminlte.min.js" />
+    <Content Include="Areas\Yonetim\dist\js\demo.js" />
+    <Content Include="Areas\Yonetim\dist\js\pages\dashboard.js" />
+    <Content Include="Areas\Yonetim\dist\js\pages\dashboard2.js" />
+    <Content Include="Areas\Yonetim\dist\js\pages\dashboard3.js" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\all.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\all.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\brands.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\brands.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\fontawesome.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\fontawesome.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\regular.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\regular.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\solid.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\solid.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\svg-with-js.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\svg-with-js.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\v4-shims.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\css\v4-shims.min.css" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.js" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.min.js" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.slim.js" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.slim.min.js" />
+    <Content Include="assets\css\bootstrap-responsive.css" />
+    <Content Include="assets\css\bootstrap-responsive.min.css" />
+    <Content Include="assets\css\bootstrap.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="assets\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="assets\font-awesome\css\font-awesome.css" />
+    <Content Include="assets\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assets\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="assets\ico\favicon.ico" />
+    <Content Include="assets\img\1.png" />
+    <Content Include="assets\img\2.png" />
+    <Content Include="assets\img\3.png" />
+    <Content Include="assets\img\4.png" />
+    <Content Include="assets\img\5.png" />
+    <Content Include="assets\img\6.png" />
+    <Content Include="assets\img\a.jpg" />
+    <Content Include="assets\img\ax.png" />
+    <Content Include="assets\img\b.jpg" />
+    <Content Include="assets\img\bootstrap-ecommerce-templates.PNG" />
+    <Content Include="assets\img\bootstrap-ring.png" />
+    <Content Include="assets\img\bootstrap-template.png" />
+    <Content Include="assets\img\bootstrap-templates.png" />
+    <Content Include="assets\img\bootstrappage_shop.png" />
+    <Content Include="assets\img\bootstrap_free-ecommerce.png" />
+    <Content Include="assets\img\c.jpg" />
+    <Content Include="assets\img\carousel1.png" />
+    <Content Include="assets\img\carousel3.png" />
+    <Content Include="assets\img\d.jpg" />
+    <Content Include="assets\img\disc.png" />
+    <Content Include="assets\img\e.jpg" />
+    <Content Include="assets\img\f.jpg" />
+    <Content Include="assets\img\g.jpg" />
+    <Content Include="assets\img\h.jpg" />
+    <Content Include="assets\img\i.jpg" />
+    <Content Include="assets\img\j.jpg" />
+    <Content Include="assets\img\logo-bootstrap-shoping-cart.png" />
+    <Content Include="assets\img\maestro.png" />
+    <Content Include="assets\img\mc.png" />
+    <Content Include="assets\img\new.png" />
+    <Content Include="assets\img\paypal.jpg" />
+    <Content Include="assets\img\pp.png" />
+    <Content Include="assets\img\s.png" />
+    <Content Include="assets\img\shop-cart.PNG" />
+    <Content Include="assets\img\shopping-cart-template.PNG" />
+    <Content Include="assets\img\visa.png" />
+    <Content Include="assets\img\white_leather.png" />
+    <Content Include="assets\js\bootstrap.js" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\jquery.easing-1.3.min.js" />
+    <Content Include="assets\js\jquery.js" />
+    <Content Include="assets\js\jquery.scrollTo-1.4.3.1-min.js" />
+    <Content Include="assets\js\shop.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="ProductImages\1.jfif" />
+    <Content Include="ProductImages\2.jfif" />
+    <Content Include="ProductImages\3.jfif" />
+    <Content Include="ProductImages\4.jfif" />
+    <Content Include="ProductImages\5.jfif" />
+    <Content Include="ProductImages\6.jfif" />
+    <Content Include="ProductImages\notfoundImages.png" />
+    <Content Include="Areas\Yonetim\Views\web.config" />
+    <Content Include="Areas\Yonetim\Views\Index\Index.cshtml" />
+    <Content Include="Areas\Yonetim\dist\css\adminlte.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\adminlte.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.components.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.components.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.core.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.core.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.extra-components.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.extra-components.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.pages.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.pages.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.plugins.css.map" />
+    <Content Include="Areas\Yonetim\dist\css\alt\adminlte.plugins.min.css.map" />
+    <Content Include="Areas\Yonetim\dist\js\.eslintrc.json" />
+    <Content Include="Areas\Yonetim\dist\js\adminlte.js.map" />
+    <Content Include="Areas\Yonetim\dist\js\adminlte.min.js.map" />
+    <Content Include="Areas\Yonetim\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Yonetim\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Areas\Yonetim\plugins\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.min.map" />
+    <Content Include="Areas\Yonetim\plugins\jquery\jquery.slim.min.map" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="Areas\Yonetim\plugins\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Yonetim\Views\CategoriManage\Index.cshtml" />
+    <Content Include="Areas\Yonetim\Views\CategoriManage\Save.cshtml" />
+    <None Include="Scripts\jquery-1.8.0.intellisense.js" />
+    <Content Include="Scripts\jquery-1.8.0.js" />
+    <Content Include="Scripts\jquery-1.8.0.min.js" />
+    <None Include="Scripts\jquery-3.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="style.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Yonetim\Controllers\CategoriManageController.cs" />
+    <Compile Include="Areas\Yonetim\Controllers\IndexController.cs" />
+    <Compile Include="Areas\Yonetim\YonetimAreaRegistration.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\DersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104110858136_CreDatebase.cs" />
+    <Compile Include="Migrations\202104110858136_CreDatebase.designer.cs">
+      <DependentUpon>202104110858136_CreDatebase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104111007212_CreateProductProperties.cs" />
+    <Compile Include="Migrations\202104111007212_CreateProductProperties.designer.cs">
+      <DependentUpon>202104111007212_CreateProductProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104170759396_KategoriAciklama.cs" />
+    <Compile Include="Migrations\202104170759396_KategoriAciklama.designer.cs">
+      <DependentUpon>202104170759396_KategoriAciklama.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104170818434_kategorimodify.cs" />
+    <Compile Include="Migrations\202104170818434_kategorimodify.designer.cs">
+      <DependentUpon>202104170818434_kategorimodify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171100162_deleteBizimUser.cs" />
+    <Compile Include="Migrations\202104171100162_deleteBizimUser.designer.cs">
+      <DependentUpon>202104171100162_deleteBizimUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171101511_deletebizimkullanici2ü.cs" />
+    <Compile Include="Migrations\202104171101511_deletebizimkullanici2ü.designer.cs">
+      <DependentUpon>202104171101511_deletebizimkullanici2ü.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171105377_deletebizimkullanici3.cs" />
+    <Compile Include="Migrations\202104171105377_deletebizimkullanici3.designer.cs">
+      <DependentUpon>202104171105377_deletebizimkullanici3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104180729176_identityTables.cs" />
+    <Compile Include="Migrations\202104180729176_identityTables.designer.cs">
+      <DependentUpon>202104180729176_identityTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104241025004_createAdressTables.cs" />
+    <Compile Include="Migrations\202104241025004_createAdressTables.designer.cs">
+      <DependentUpon>202104241025004_createAdressTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Adres.cs" />
+    <Compile Include="Models\AppRole.cs" />
+    <Compile Include="Models\Il.cs" />
+    <Compile Include="Models\Ilce.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
+    <Compile Include="Models\Kargo.cs" />
+    <Compile Include="Models\Kategori.cs" />
+    <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\Ozellik.cs" />
+    <Compile Include="Models\OzellikMaster.cs" />
+    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\SepetSepetYumurta.cs" />
+    <Compile Include="Models\Siparis.cs" />
+    <Compile Include="Models\SiparisDetay.cs" />
+    <Compile Include="Models\Urun.cs" />
+    <Compile Include="Models\UrunImages.cs" />
+    <Compile Include="Models\UrunOzellik.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="ClassDiagram1.cd" />
+    <Content Include="assets\font-awesome\font\fontawesome-webfont.eot" />
+    <Content Include="assets\font-awesome\font\fontawesome-webfont.ttf" />
+    <Content Include="assets\font-awesome\font\fontawesome-webfont.woff" />
+    <Content Include="assets\font-awesome\font\FontAwesome.otf" />
+    <Content Include="assets\font-awesome\less\bootstrap.less" />
+    <Content Include="assets\font-awesome\less\core.less" />
+    <Content Include="assets\font-awesome\less\extras.less" />
+    <Content Include="assets\font-awesome\less\font-awesome-ie7.less" />
+    <Content Include="assets\font-awesome\less\font-awesome.less" />
+    <Content Include="assets\font-awesome\less\icons.less" />
+    <Content Include="assets\font-awesome\less\mixins.less" />
+    <Content Include="assets\font-awesome\less\path.less" />
+    <Content Include="assets\font-awesome\less\variables.less" />
+    <Content Include="assets\font-awesome\scss\font-awesome-ie7.scss" />
+    <Content Include="assets\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assets\font-awesome\scss\_bootstrap.scss" />
+    <Content Include="assets\font-awesome\scss\_core.scss" />
+    <Content Include="assets\font-awesome\scss\_extras.scss" />
+    <Content Include="assets\font-awesome\scss\_icons.scss" />
+    <Content Include="assets\font-awesome\scss\_mixins.scss" />
+    <Content Include="assets\font-awesome\scss\_path.scss" />
+    <Content Include="assets\font-awesome\scss\_variables.scss" />
+    <None Include="packages.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Shared\_SepetTop.cshtml" />
+    <Content Include="Views\Shared\_SepetMiniInfo.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Products\Detail.cshtml" />
+    <Content Include="Views\Ders\Index.cshtml" />
+    <Content Include="Views\Ders\KategoriGetir.cshtml" />
+    <Content Include="Views\KategoriYonetim\Index.cshtml" />
+    <Content Include="Views\KategoriYonetim\AddOrUpdate.cshtml" />
+    <Content Include="Views\Cart\_SepetList.cshtml" />
+    <Content Include="Views\Shared\_KategoriList.cshtml" />
+    <Content Include="Views\Shared\_ProductListTemplate.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\RegisterAndLogin.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\Account\AddAddress.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Yonetim\Data\" />
+    <Folder Include="Areas\Yonetim\Views\RoleYonetimi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202104110858136_CreDatebase.resx">
+      <DependentUpon>202104110858136_CreDatebase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104111007212_CreateProductProperties.resx">
+      <DependentUpon>202104111007212_CreateProductProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170759396_KategoriAciklama.resx">
+      <DependentUpon>202104170759396_KategoriAciklama.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170818434_kategorimodify.resx">
+      <DependentUpon>202104170818434_kategorimodify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171100162_deleteBizimUser.resx">
+      <DependentUpon>202104171100162_deleteBizimUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171101511_deletebizimkullanici2ü.resx">
+      <DependentUpon>202104171101511_deletebizimkullanici2ü.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171105377_deletebizimkullanici3.resx">
+      <DependentUpon>202104171105377_deletebizimkullanici3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104180729176_identityTables.resx">
+      <DependentUpon>202104180729176_identityTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104241025004_createAdressTables.resx">
+      <DependentUpon>202104241025004_createAdressTables.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52291</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52291/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
